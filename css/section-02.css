@@ -27,10 +27,10 @@
 .section-02 main .newspaper {
     background-color: var(--white);
     padding: 50px;
-    height: 80vh;
+    /* height: 80vh; */
     display: grid;
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr 1fr 1fr;
+    grid-template-rows: repeat(3, auto);
     align-content: stretch;
     gap: 20px;
     grid-auto-flow: column;

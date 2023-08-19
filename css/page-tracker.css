@@ -1,5 +1,7 @@
 .page-tracker {
     position: fixed;
+    width: max-content;
+    height: max-content;
     right: 0;
     top: 30px;
 }

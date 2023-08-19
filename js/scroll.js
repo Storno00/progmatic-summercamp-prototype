@@ -1,30 +1,31 @@
 const lines = document.querySelectorAll('.page-tracker .line');
 const spans = document.querySelectorAll('.page-tracker .tracker span');
+const sections = document.querySelectorAll('.section-01, .section-02, .section-03');
 
-let prevScrollY = 0;
+function getBoundingClientRectTop(el) {
+  if (!el) return Number.MIN_SAFE_INTEGER;
+  const rect = el.getBoundingClientRect();
+  return rect.top;
+}
 
 document.addEventListener("scroll", () => {
-    let currentScrollY = 0;
+  lines.forEach((line) => line.classList.remove('active-line'));
+  spans.forEach((span) => span.classList.remove('active-text'));
 
-    lines.forEach((line) => line.classList.remove('active-line'));
-    spans.forEach((span) => span.classList.remove('active-text'));
+  let activeSection;
+  let activeSectionIndex;
 
-    if (prevScrollY < window.scrollY) {
-        currentScrollY = window.innerHeight * 0.7;
-    } else {
-        currentScrollY = window.innerHeight * 0.3;
+  sections.forEach((section, sectionIndex) => {
+    if (getBoundingClientRectTop(section) > 100 ) return;
+    if (getBoundingClientRectTop(activeSection) <= getBoundingClientRectTop(section)) {
+      activeSection = section;
+      activeSectionIndex = sectionIndex;
+      console.log('találat', activeSectionIndex)
     }
+  });
 
-    if (window.scrollY <= currentScrollY) {
-        lines[0].classList.add('active-line');
-        spans[0].classList.add('active-text');
-    } else if (window.scrollY <= window.innerHeight + currentScrollY) {
-        lines[1].classList.add('active-line');
-        spans[1].classList.add('active-text');
-    } else {
-        lines[2].classList.add('active-line');
-        spans[2].classList.add('active-text');
-    }
-
-    prevScrollY = window.scrollY;
+  if (activeSectionIndex >= 0){
+    lines[activeSectionIndex].classList.add('active-line');
+    spans[activeSectionIndex].classList.add('active-text');
+  }
 });
